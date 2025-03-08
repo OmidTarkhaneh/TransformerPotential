@@ -1,5 +1,4 @@
 import torch
-# import torchani
 import os
 import math
 import torch.utils.tensorboard
@@ -15,9 +14,6 @@ import os
 import tqdm
 import pickle
 import torch.nn.functional as F
-
-
-
 
 
 
@@ -41,7 +37,6 @@ import warnings
 
 ##################################################################################
 
-# has_cuaev = 'torchani.cuaev' in importlib_metadata.metadata(__package__).get_all('Provides')
 has_cuaev=False
 if has_cuaev:
 

@@ -69,7 +69,7 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
 
                         # Transformer Encoder
                         self.lin1=nn.Linear(input_size, mlp_hidden_size)
-                        self.elu=nn.GELU()
+                        self.gelu=nn.GELU()
                         self.embedding = nn.Linear(mlp_hidden_size, hidden_size)
                         self.transformer_encoder_layer = nn.TransformerEncoderLayer(hidden_size, n_heads, dim_feedforward=ff_hidden_size)
                         self.transformer_encoder = nn.TransformerEncoder(self.transformer_encoder_layer, num_layers=n_layers)
@@ -86,7 +86,7 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
                 def forward(self, x):
                         # Transformer Encoder
                         x=self.lin1(x)
-                        x=self.elu(x)
+                        x=self.gelu(x)
                         
                         x_transformed = self.embedding(x)
                         x_transformed=torch.unsqueeze(x_transformed, dim=0)
