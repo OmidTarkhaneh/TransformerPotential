@@ -6,7 +6,7 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
         import torch.utils.tensorboard
         import tqdm
         import numpy as np
-      
+             
         import torch.nn as nn
         import torch.optim as optim  
         from sklearn.metrics import mean_squared_error
@@ -35,33 +35,12 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
 
         num_species = len(species_order)
         aev_computer = AEVComputer(Rcr, Rca, EtaR, ShfR, EtaA, Zeta, ShfA, ShfZ, num_species)
-        # energy_shifter = EnergyShifter(None)
+
         print('Self atomic energies: ', energy_shifter.self_energies)
-
-
-
-
-
-
-        ####################################################################
         aev_dim = aev_computer.aev_length
 
-        import torch
-        import torch.nn as nn
 
-
-
-
-
-        #####################################
         ################################################
-        import torch
-        import torch.nn as nn
-        import torch.optim as optim
-        from sklearn.datasets import fetch_california_housing
-        from sklearn.model_selection import train_test_split
-        from sklearn.preprocessing import StandardScaler
-        from torch.utils.data import DataLoader, TensorDataset
 
         class TransformerEncoderMLP(nn.Module):
                 def __init__(self, input_size, hidden_size, n_heads, n_layers, ff_hidden_size, mlp_hidden_size):
@@ -74,7 +53,7 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
                         self.transformer_encoder_layer = nn.TransformerEncoderLayer(hidden_size, n_heads, dim_feedforward=ff_hidden_size)
                         self.transformer_encoder = nn.TransformerEncoder(self.transformer_encoder_layer, num_layers=n_layers)
 
-                        # MLP
+          
                         self.mlp = nn.Sequential(
                         nn.Linear(hidden_size, mlp_hidden_size),
                         nn.GELU(),
@@ -93,7 +72,7 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
                         x_transformed = self.transformer_encoder(x_transformed)
                         x_transformed=torch.squeeze(x_transformed, dim=0)
 
-                        # MLP
+                    
                         output = self.mlp(x_transformed)
                         return output
 
@@ -164,20 +143,10 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
         latest_checkpoint = 'latest.pt'
 
 
-        # if os.path.isfile(latest_checkpoint):
-        #     checkpoint = torch.load(latest_checkpoint)
-        #     nn.load_state_dict(checkpoint['nn'])
-        #     AdamW.load_state_dict(checkpoint['AdamW'])
-        #     AdamW_scheduler.load_state_dict(checkpoint['AdamW_scheduler'])
-
-
         import torch
         from torch.utils.tensorboard import SummaryWriter
         writer = SummaryWriter()
 
-
-        # During training, we need to validate on validation set and if validation error
-        # is better than the best, then save the new best model to a checkpoint
 
 
         def validate():
@@ -188,8 +157,6 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
                 true_energies_1=[]
                 predicted_energies_1=[]
 
-                true_dftmain_energy=[]
-                predicted_dftmain_energies=[]
 
                 model.train(False)
                 with torch.no_grad():
@@ -274,14 +241,13 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
                         loss = (mse(predicted_energies, true_energies) / num_atoms.sqrt()).mean()
 
                         AdamW.zero_grad()
-                        # SGD.zero_grad()
+               
                         loss.backward()
                         # Apply gradient clipping
                         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=max_gradient_norm)
 
                         AdamW.step()
-                        # SGD.step()
-
+               
                         # write current batch loss to TensorBoard
                         tensorboard.add_scalar('batch_loss', loss, AdamW_scheduler.last_epoch * len(training) + i)
 
@@ -345,7 +311,7 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
         mse=mean_squared_error(true_energies_22,pred_energies_22)
 
         rmse_test=np.sqrt(mse)
-        # rmse_test=hartree2kjoulemol(rmse_test)
+
         print('overall rmse_test(kJ/mol)=',hartree2kjoulemol(rmse_test))
 ######################################################################################
 
