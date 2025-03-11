@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from ypstruct import structure
 from Model import ModelTest
+from Model_Scratch import ModelTest_FromScratch
 from Modelutils import EnergyShifter, load
 import os
 import pandas as pd
@@ -72,7 +73,11 @@ training, validation = load(dspath)\
 
 training = training.collate(batch_size).cache()
 validation = validation.collate(batch_size).cache()
+
+
 print('Self atomic energies: ', energy_shifter.self_energies)
+
+
 
 ###################################################
 
