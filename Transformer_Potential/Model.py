@@ -66,7 +66,7 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
                         # Transformer Encoder
                         x=self.lin1(x)
                         x=self.gelu(x)
-                        
+                        # x_transformer=self.embedding(x)
                         x_transformed = x
                         x_transformed=torch.unsqueeze(x_transformed, dim=0)
                         x_transformed = self.transformer_encoder(x_transformed)
