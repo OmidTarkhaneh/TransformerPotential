@@ -157,7 +157,7 @@ def ModelTest_FromScratch(training, validation, data_test,species_order,energy_s
                 # Input processing
                 self.lin1 = nn.Linear(input_size, mlp_hidden_size)
                 self.gelu = nn.GELU()
-                # self.embedding = nn.Linear(mlp_hidden_size, hidden_size)
+                self.embedding = nn.Linear(mlp_hidden_size, hidden_size)
                 # self.positional_encoding = PositionalEncoding(hidden_size)
 
                 # custom transformer encoder layer
@@ -181,7 +181,7 @@ def ModelTest_FromScratch(training, validation, data_test,species_order,energy_s
                 x = self.gelu(x)
 
                 
-                x_transformed = x
+                x_transformed = self.embedding(x)
 
                 # Add batch dimension if not present
                 if x_transformed.dim() == 2:
@@ -203,10 +203,10 @@ def ModelTest_FromScratch(training, validation, data_test,species_order,energy_s
  
         def create_model(aev_dim):
             input_size = aev_dim
-            hidden_size = 128
+            hidden_size = 64
             n_heads = 2
             n_layers = 1
-            ff_hidden_size = 64
+            ff_hidden_size = 128
             mlp_hidden_size = 128
 
             H_network = TransformerEncoderModel(
