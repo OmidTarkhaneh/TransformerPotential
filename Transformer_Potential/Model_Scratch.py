@@ -337,8 +337,8 @@ def ModelTest_FromScratch(training, validation, data_test,species_order,energy_s
                         break
 
                 # checkpoint
-                if AdamW_scheduler.is_better(rmse, AdamW_scheduler.best):
-                        torch.save(nn.state_dict(), best_model_checkpoint)
+                # if AdamW_scheduler.is_better(rmse, AdamW_scheduler.best):
+                #         torch.save(nn.state_dict(), best_model_checkpoint)
 
                 AdamW_scheduler.step(rmse)
         

@@ -213,8 +213,8 @@ def ModelTest(training, validation, data_test,species_order,energy_shifter, epoc
                         break
 
                 # checkpoint
-                if AdamW_scheduler.is_better(rmse, AdamW_scheduler.best):
-                        torch.save(nn.state_dict(), best_model_checkpoint)
+                # if AdamW_scheduler.is_better(rmse, AdamW_scheduler.best):
+                #         torch.save(nn.state_dict(), best_model_checkpoint)
 
                 AdamW_scheduler.step(rmse)
         
